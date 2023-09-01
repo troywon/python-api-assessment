@@ -28,9 +28,6 @@ def generate_confirmation_token():
 class UserRegistration(Resource):
     @ns.expect(registration_model)
     def post(self):
-        """
-        Request user registration
-        """
         data = request.json
         email = data['email']
         password = data['password']
@@ -65,16 +62,11 @@ class UserRegistration(Resource):
 @ns.route('/registered')
 class RegisteredUsers(Resource):
     def get(self):
-        """
-        Get all registered users
-        """
         return {'registered_users': registered_users}
 
 @app.route('/confirm/<string:confirmation_token>', methods=['GET'])
 def confirm_email(confirmation_token):
-    """
-    Confirm user registration
-    """
+
     if confirmation_token in registration_requests:
         user_data = registration_requests[confirmation_token]
         del registration_requests[confirmation_token]
